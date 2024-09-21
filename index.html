@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: rgb(122, 19, 122);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #card {
+            width: 350px;
+            height: 450px;
+            background-color: plum;
+            border-radius: 15px;
+        }
+        #storiya {
+            height: 120px;
+            width: 100%;
+            background-color: pink;
+            padding: 20px;
+            border-radius: 20px;
+            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+        }
+        #storiya::-webkit-scrollbar {
+            display: none;
+        }
+        .story {
+            border: 2px solid purple;
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: inline-block;
+            margin-right: 10px; /* Spacing between story elements */
+        }
+        .story img {
+            object-fit: cover;
+            object-position: center;
+            width: 100%;
+            height: 100%;
+        }
+        #full-screen {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div id="full-screen"></div>
+    <div id="card">
+        <div id="storiya"></div>
+    </div>
+    <script>
+        const arr = [
+            {
+                dp: "https://cdn.pixabay.com/photo/2017/01/03/09/18/woman-1948939_1280.jpg",
+                story: "https://cdn.pixabay.com/photo/2017/01/03/09/18/woman-1948939_1280.jpg"
+            },
+            {
+                dp: "https://cdn.pixabay.com/photo/2017/01/03/09/18/woman-1948939_1280.jpg",
+                story: "https://cdn.pixabay.com/photo/2017/01/03/09/18/woman-1948939_1280.jpg"
+            },
+            {
+                dp: "https://cdn.pixabay.com/photo/2017/01/03/09/18/woman-1948939_1280.jpg",
+                story: "https://cdn.pixabay.com/photo/2017/01/03/09/18/woman-1948939_1280.jpg"
+            },
+            {
+                dp: "https://cdn.pixabay.com/photo/2017/01/03/09/18/woman-1948939_1280.jpg",
+                story: "https://cdn.pixabay.com/photo/2017/01/03/09/18/woman-1948939_1280.jpg"
+            },
+            {
+                dp: "https://cdn.pixabay.com/photo/2017/01/03/09/18/woman-1948939_1280.jpg",
+                story: "https://cdn.pixabay.com/photo/2017/01/03/09/18/woman-1948939_1280.jpg"
+            }
+        ];
+
+        const storiya = document.getElementById('storiya');
+        const fullScreen = document.getElementById('full-screen');
+
+        let clutter = "";
+        arr.forEach(function(elem, idx) {
+            clutter += `<div class="story" data-index="${idx}">
+                <img src="${elem.dp}" alt="">
+            </div>`;
+        });
+        storiya.innerHTML = clutter;
+
+        storiya.addEventListener('click', function(event) {
+            const target = event.target.closest('.story');
+            if (target) {
+                const index = target.getAttribute('data-index');
+                fullScreen.style.display = 'block';
+                fullScreen.style.backgroundImage = `url(${arr[index].story})`;
+            }
+        });
+
+        fullScreen.addEventListener('click', function() {
+            fullScreen.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
